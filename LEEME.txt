@@ -1,0 +1,94 @@
+TU APPLE TDF - SITIO WEB
+========================
+
+COMO ABRIRLO
+------------
+1) PRIMERO descomprimi el ZIP (clic derecho > Extraer todo).
+2) RECIEN AHI hace doble clic en:  tuappletdf.html
+
+NO abras el HTML desde adentro del ZIP. Si lo hacés, Windows saca
+solo ese archivo a una carpeta temporal y deja atrás el logo.
+
+IMPORTANTE
+----------
+Los archivos tienen que estar SIEMPRE JUNTOS en la misma carpeta:
+
+  tuappletdf.html       <- la web (abri este)
+  logo-tuappletdf.png   <- el logo
+
+Si sacas el HTML de esta carpeta, el logo no se va a ver.
+
+
+QUE PUEDO EDITAR YO MISMO
+=========================
+Todo lo editable está junto, al final del archivo tuappletdf.html,
+dentro del bloque <script>. Abrilo con el Bloc de notas.
+
+1) TU NUMERO E INSTAGRAM
+   Buscá "const CONFIG" (está primero de todo).
+   Cambiá el numero de WhatsApp por el tuyo, con codigo de pais
+   y sin +, espacios ni guiones. Ejemplo Ushuaia: 5492901234567
+
+2) PRECIOS Y EQUIPOS
+   Buscá "const PRODUCTS".
+   Cada linea es un equipo. Para cambiar un precio, cambiá el numero
+   que dice price (contado) y cuota (valor de cada cuota).
+   Para sacar un equipo, borrá su linea completa.
+
+   IMPORTANTE si cambias precios: el catalogo esta escrito DOS veces,
+   una en PRODUCTS (arriba) y otra en el HTML de las tarjetas. Esa
+   segunda copia es la que se ve cuando alguien abre el archivo desde
+   la vista previa de WhatsApp, que no ejecuta JavaScript.
+   Si cambias un precio en PRODUCTS, en el navegador se ve al toque,
+   pero en la vista previa de WhatsApp va a seguir el viejo.
+   Cuando actualices precios, avisame y te regenero el archivo.
+
+3) SERVICIOS DEL SERVICIO TECNICO
+   Buscá "const SERVICIOS".
+   IMPORTANTE: revisá esa lista y dejá SOLO los servicios que
+   realmente hacés. Borrá las lineas de los que no ofrecés.
+
+4) DESTACADOS DE LA ISLA QUE GIRA
+   Buscá "const DESTACADOS". Son los nombres de los modelos que
+   aparecen rotando en el inicio.
+
+
+EL ASISTENTE (boton de abajo a la derecha)
+==========================================
+Responde solo con los datos REALES de este archivo: precios, cuotas,
+formas de pago, garantia, usados, servicio tecnico y ubicacion.
+Si le preguntan algo que no sabe, deriva a tu WhatsApp.
+
+Se actualiza solo: si cambias un precio en PRODUCTS, el asistente ya
+contesta el precio nuevo. No hay que tocarlo.
+
+OJO: NO es ChatGPT. Para conectar una IA de verdad hace falta un
+servidor, porque la clave de acceso no puede ir dentro del HTML
+(cualquiera que abra el archivo la podria ver y gastar tu credito).
+
+
+LO QUE FALTA COMPLETAR
+======================
+- Los textos de cada equipo: en la ficha de cada celular hay un
+  bloque "Sobre este equipo" con un cartel que dice "Acá va tu
+  descripción del modelo". Pasame los textos y los cargo.
+
+- Fotos por color: hoy la paletita de colores marca el color elegido
+  y lo manda en el mensaje de WhatsApp, pero la foto no cambia.
+  Para que cambie hace falta una foto de cada color.
+
+- Fotos propias: las fotos de los equipos ahora van adentro del
+  archivo, asi que se ven siempre, con o sin internet. Son fotos
+  genericas de catalogo. Si me pasas fotos tuyas de los equipos
+  reales quedan mucho mejor y las cambio.
+
+- El foro: para que la gente pueda escribir y que los mensajes queden
+  guardados hace falta un servidor con base de datos. El diseño ya
+  está hecho y la seccion dice "Próximamente".
+
+
+PARA PUBLICARLA EN INTERNET
+---------------------------
+Subi el contenido de esta carpeta a tu hosting.
+Si renombras tuappletdf.html a index.html, la web abre sola
+al entrar al dominio.
