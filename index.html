@@ -742,6 +742,12 @@ nav {
   mix-blend-mode:normal;
   transition:opacity .25s ease;
 }
+/* Las tres fotos viejas (iPhone 11, 11 Pro Max y 12 Pro Max) tienen
+   fondo blanco, así que se funden con la baldosa clara. */
+.foto.foto-fondo {
+  mix-blend-mode:multiply;
+  transition:opacity .25s ease;
+}
 
 .prod-acciones { display:flex; gap:12px; flex-wrap:wrap; margin-top:32px; }
 /* Lista de capacidades con precio (ficha sin JavaScript) */
@@ -2418,7 +2424,7 @@ footer a { color:var(--link); }
   </a>
   <div class="prod-wrap">
     <div class="prod-shot">
-      <i class="foto foto-apple-iphone-12-pro-max" role="img" aria-label="iPhone 12 Pro Max"></i>
+      <i class="foto foto-fondo" role="img" aria-label="iPhone 12 Pro Max" style="background-image:url('tdf-iphone-12-pro-max.png')"></i>
     </div>
     <div class="prod-info">
       <div class="tag usado">Usado certificado &middot; Bater&iacute;a 100%</div>
@@ -2427,6 +2433,10 @@ footer a { color:var(--link); }
       <ul class="prod-lista">
         <li><span>128 GB &middot; bater&iacute;a 100%</span><b>$ 1.120.499,90</b><small>6 cuotas de $ 186.749,98</small></li>
       </ul>
+      <div class="prod-opcion">
+        <p>Colores disponibles: <b>Silver</b></p>
+        <div class="swatches estaticos"><span class="swatch" title="Silver" style="background:#e2e3e5"></span></div>
+      </div>
       <div class="prod-acciones">
         <a class="btn btn-blue" href="https://wa.me/5492901566408?text=%C2%A1Hola%20Tu%20Apple%20TDF!%20Quiero%20consultar%20por%20el%20iPhone%2012%20Pro%20Max%20128%20GB%20(usado)." target="_blank" rel="noopener">Consultar por WhatsApp</a>
       </div>
@@ -2478,7 +2488,7 @@ footer a { color:var(--link); }
   </a>
   <div class="prod-wrap">
     <div class="prod-shot">
-      <i class="foto foto-apple-iphone-11-pro-max-" role="img" aria-label="iPhone 11 Pro Max"></i>
+      <i class="foto foto-fondo" role="img" aria-label="iPhone 11 Pro Max" style="background-image:url('tdf-iphone-11-pro-max.png')"></i>
     </div>
     <div class="prod-info">
       <div class="tag usado">Usado certificado &middot; Bater&iacute;a 100%</div>
@@ -2488,6 +2498,10 @@ footer a { color:var(--link); }
         <li><span>64 GB &middot; bater&iacute;a 100%</span><b>$ 912.389,40</b><small>6 cuotas de $ 152.064,90</small></li>
         <li><span>256 GB &middot; bater&iacute;a 100%</span><b>$ 954.011,50</b><small>6 cuotas de $ 159.001,92</small></li>
       </ul>
+      <div class="prod-opcion">
+        <p>Colores disponibles: <b>Silver</b></p>
+        <div class="swatches estaticos"><span class="swatch" title="Silver" style="background:#e2e3e5"></span></div>
+      </div>
       <div class="prod-acciones">
         <a class="btn btn-blue" href="https://wa.me/5492901566408?text=%C2%A1Hola%20Tu%20Apple%20TDF!%20Quiero%20consultar%20por%20el%20iPhone%2011%20Pro%20Max%2064%20GB%20(usado)." target="_blank" rel="noopener">Consultar por WhatsApp</a>
       </div>
@@ -2507,7 +2521,7 @@ footer a { color:var(--link); }
   </a>
   <div class="prod-wrap">
     <div class="prod-shot">
-      <i class="foto foto-apple-iphone-11" role="img" aria-label="iPhone 11"></i>
+      <i class="foto foto-fondo" role="img" aria-label="iPhone 11" style="background-image:url('tdf-iphone-11.png')"></i>
     </div>
     <div class="prod-info">
       <div class="tag usado">Usado certificado &middot; Bater&iacute;a 80%</div>
@@ -2517,6 +2531,10 @@ footer a { color:var(--link); }
         <li><span>64 GB &middot; bater&iacute;a 80%</span><b>$ 725.089,95</b><small>6 cuotas de $ 120.848,33</small></li>
         <li><span>64 GB &middot; bater&iacute;a 100%</span><b>$ 797.928,63</b><small>6 cuotas de $ 132.988,10</small></li>
       </ul>
+      <div class="prod-opcion">
+        <p>Colores disponibles: <b>Black</b></p>
+        <div class="swatches estaticos"><span class="swatch" title="Black" style="background:#1d1d1f"></span></div>
+      </div>
       <div class="prod-acciones">
         <a class="btn btn-blue" href="https://wa.me/5492901566408?text=%C2%A1Hola%20Tu%20Apple%20TDF!%20Quiero%20consultar%20por%20el%20iPhone%2011%2064%20GB%20(usado)." target="_blank" rel="noopener">Consultar por WhatsApp</a>
       </div>
@@ -2734,11 +2752,11 @@ footer a { color:var(--link); }
   <article class="card">
     <div class="tag usado">Usado &middot; Bater&iacute;a 100%</div>
     <a class="card-link" href="#p39">
-      <div class="img-wrap"><i class="foto foto-apple-iphone-12-pro-max" role="img" aria-label="iPhone 12 Pro Max"></i></div>
+      <div class="img-wrap"><i class="foto foto-fondo" role="img" aria-label="iPhone 12 Pro Max" style="background-image:url('tdf-iphone-12-pro-max.png')"></i></div>
       <h3>iPhone 12 Pro Max</h3>
       <div class="spec">128 GB</div>
     </a>
-    <div class="colors"></div>
+    <div class="colors">Silver</div>
     <div class="price">$ 1.120.499,90<small>precio de contado</small></div>
     <div class="cuotas">o 6 cuotas de $ 186.749,98</div>
     <div class="buy-row">
@@ -2764,11 +2782,11 @@ footer a { color:var(--link); }
   <article class="card">
     <div class="tag usado">Usado &middot; Bater&iacute;a 100%</div>
     <a class="card-link" href="#p42">
-      <div class="img-wrap"><i class="foto foto-apple-iphone-11-pro-max-" role="img" aria-label="iPhone 11 Pro Max"></i></div>
+      <div class="img-wrap"><i class="foto foto-fondo" role="img" aria-label="iPhone 11 Pro Max" style="background-image:url('tdf-iphone-11-pro-max.png')"></i></div>
       <h3>iPhone 11 Pro Max</h3>
       <div class="spec">64 GB &middot; 256 GB</div>
     </a>
-    <div class="colors"></div>
+    <div class="colors">Silver</div>
     <div class="price">Desde $ 912.389,40<small>precio de contado</small></div>
     <div class="cuotas">o 6 cuotas de $ 152.064,90</div>
     <div class="buy-row">
@@ -2779,11 +2797,11 @@ footer a { color:var(--link); }
   <article class="card">
     <div class="tag usado">Usado &middot; Bater&iacute;a 80%</div>
     <a class="card-link" href="#p44">
-      <div class="img-wrap"><i class="foto foto-apple-iphone-11" role="img" aria-label="iPhone 11"></i></div>
+      <div class="img-wrap"><i class="foto foto-fondo" role="img" aria-label="iPhone 11" style="background-image:url('tdf-iphone-11.png')"></i></div>
       <h3>iPhone 11</h3>
       <div class="spec">64 GB</div>
     </a>
-    <div class="colors"></div>
+    <div class="colors">Black</div>
     <div class="price">Desde $ 725.089,95<small>precio de contado</small></div>
     <div class="cuotas">o 6 cuotas de $ 120.848,33</div>
     <div class="buy-row">
@@ -3168,15 +3186,30 @@ const FOTOS_COLOR = {
   "iPhone 12": {
     "Blue": "iphone-12-finish-select-202207-6-1inch-blue",
   },
+
+  /* Estos tres Apple ya no los publica (son de 2019/2020). Las fotos las
+     pasó el cliente y son las de sus equipos reales.
+     Se reconocen por el prefijo "tdf-": llevan fondo blanco, no transparente. */
+  "iPhone 12 Pro Max": { "Silver": "tdf-iphone-12-pro-max" },
+  "iPhone 11 Pro Max": { "Silver": "tdf-iphone-11-pro-max" },
+  "iPhone 11":         { "Black":  "tdf-iphone-11" },
 };
+
+/* Las fotos que empiezan con "tdf-" tienen fondo blanco y hay que
+   fundirlas con la baldosa; las de Apple son transparentes y no. */
+const conFondoBlanco = (id) => String(id).startsWith("tdf-");
 
 /* Devuelve la dirección de la foto del equipo en el color pedido.
    Si ese color no tiene foto propia, usa la primera del modelo.
    "chica" pide la versión liviana, que es la que va en las tarjetas. */
-function urlFoto(p, color, chica) {
+function idFoto(p, color) {
   const porModelo = FOTOS_COLOR[p.name];
   if (!porModelo) return null;
-  const id = (color && porModelo[color]) || porModelo[Object.keys(porModelo)[0]];
+  return (color && porModelo[color]) || porModelo[Object.keys(porModelo)[0]] || null;
+}
+
+function urlFoto(p, color, chica) {
+  const id = idFoto(p, color);
   if (!id) return null;
   /* Hoy hay una sola medida de cada foto, así que "chica" no cambia nada.
      Si más adelante subís las versiones livianas con el prefijo "th-",
@@ -3185,12 +3218,18 @@ function urlFoto(p, color, chica) {
   return CARPETA_FOTOS + id + ".png";
 }
 
+/* La clase depende de si la foto tiene fondo blanco o es transparente. */
+function claseDeFoto(id) {
+  return conFondoBlanco(id) ? "foto foto-fondo" : "foto foto-apple";
+}
+
 /* Atributos listos para pegar en el HTML de una foto.
    Si hay foto oficial de ese color la usa; si no, cae en la incrustada. */
 function atributosFoto(p, color, chica) {
+  const id = idFoto(p, color);
   const url = urlFoto(p, color, chica);
   if (url) {
-    return `class="foto foto-apple" role="img" aria-label="${p.name}" ` +
+    return `class="${claseDeFoto(id)}" role="img" aria-label="${p.name}" ` +
            `style="background-image:url('${url}')"`;
   }
   return `class="${claseFotoColor(p, color)}" role="img" aria-label="${p.name}"`;
@@ -3203,7 +3242,7 @@ function cambiarFoto(el, p, color, chica) {
   const url = urlFoto(p, color, chica);
   const aplicar = () => {
     if (url) {
-      el.className = "foto foto-apple";
+      el.className = claseDeFoto(idFoto(p, color));
       el.style.backgroundImage = `url('${url}')`;
     } else {
       el.style.backgroundImage = "";
@@ -3268,12 +3307,12 @@ const PRODUCTS = [
   { name:"iPhone 13 Pro", spec:"128 GB", colors:"Graphite", bat:null, price:1297393.83, cuota:216232.30, cond:"usado", cat:"iphone", img:IMG("apple-iphone-13-pro") },
   { name:"iPhone 13", spec:"256 GB", colors:"Midnight", bat:100, price:1130905.43, cuota:188484.24, cond:"usado", cat:"iphone", img:IMG("apple-iphone-13") },
   { name:"iPhone 13", spec:"128 GB", colors:"Midnight", bat:100, price:1089283.33, cuota:181547.22, cond:"usado", cat:"iphone", img:IMG("apple-iphone-13") },
-  { name:"iPhone 12 Pro Max", spec:"128 GB", bat:100, price:1120499.90, cuota:186749.98, cond:"usado", cat:"iphone", img:IMG("apple-iphone-12-pro-max") },
+  { name:"iPhone 12 Pro Max", spec:"128 GB", colors:"Silver", bat:100, price:1120499.90, cuota:186749.98, cond:"usado", cat:"iphone", img:IMG("apple-iphone-12-pro-max") },
   { name:"iPhone 12", spec:"128 GB", colors:"Blue", bat:100, price:912389.40, cuota:152064.90, cond:"usado", cat:"iphone", img:IMG("apple-iphone-12") },
-  { name:"iPhone 11 Pro Max", spec:"256 GB", bat:100, price:954011.50, cuota:159001.92, cond:"usado", cat:"iphone", img:IMG("apple-iphone-11-pro-max-") },
-  { name:"iPhone 11 Pro Max", spec:"64 GB", bat:100, price:912389.40, cuota:152064.90, cond:"usado", cat:"iphone", img:IMG("apple-iphone-11-pro-max-") },
-  { name:"iPhone 11", spec:"64 GB", bat:100, price:797928.63, cuota:132988.10, cond:"usado", cat:"iphone", img:IMG("apple-iphone-11") },
-  { name:"iPhone 11", spec:"64 GB", bat:80, price:725089.95, cuota:120848.33, cond:"usado", cat:"iphone", img:IMG("apple-iphone-11") },
+  { name:"iPhone 11 Pro Max", spec:"256 GB", colors:"Silver", bat:100, price:954011.50, cuota:159001.92, cond:"usado", cat:"iphone", img:IMG("apple-iphone-11-pro-max-") },
+  { name:"iPhone 11 Pro Max", spec:"64 GB", colors:"Silver", bat:100, price:912389.40, cuota:152064.90, cond:"usado", cat:"iphone", img:IMG("apple-iphone-11-pro-max-") },
+  { name:"iPhone 11", spec:"64 GB", colors:"Black", bat:100, price:797928.63, cuota:132988.10, cond:"usado", cat:"iphone", img:IMG("apple-iphone-11") },
+  { name:"iPhone 11", spec:"64 GB", colors:"Black", bat:80, price:725089.95, cuota:120848.33, cond:"usado", cat:"iphone", img:IMG("apple-iphone-11") },
 
 ];
 
