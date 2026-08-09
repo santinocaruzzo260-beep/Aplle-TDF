@@ -959,11 +959,18 @@ nav {
 .foro-detalle { display:none; }
 .foro-detalle.abierto { display:block; }
 .foro-lista.oculto { display:none; }
+/* Botón para salir de un tema. Va arriba y también al final, porque en
+   celular el tema queda largo y volver hasta arriba es incómodo. */
 .foro-volver {
-  display:inline-flex; align-items:center; gap:6px;
-  font-size:14px; color:var(--link); margin-bottom:18px;
+  display:inline-flex; align-items:center; gap:7px; cursor:pointer;
+  font-family:inherit; font-size:14.5px; font-weight:600; color:#f5f5f7;
+  background:#1c1c21; border:1px solid rgba(255,255,255,.16);
+  padding:10px 18px 10px 14px; border-radius:980px; margin-bottom:18px;
+  transition:border-color .2s, background .2s;
 }
-.foro-volver svg { width:15px; height:15px; }
+.foro-volver:hover { background:#24242a; border-color:rgba(224,169,120,.5); }
+.foro-volver svg { width:16px; height:16px; }
+.foro-volver.abajo { margin:20px 0 0; }
 .foro-post {
   background:#111114; border:1px solid rgba(255,255,255,.09);
   border-radius:16px; padding:20px 22px; margin-bottom:12px;
@@ -1461,7 +1468,7 @@ footer a { color:var(--link); }
     <div class="faq-wrap">
       <h2>Preguntas frecuentes</h2>
 
-      <details class="faq-item" open>
+      <details class="faq-item">
         <summary>¿Los equipos vienen liberados?</summary>
         <p>Sí. Todos los equipos se entregan libres de fábrica, listos para usar con la compañía que quieras.</p>
       </details>
@@ -4179,8 +4186,33 @@ function route() {
   document.querySelectorAll('.nav-links a[href^="#"]').forEach((a) =>
     a.classList.toggle("active", a.getAttribute("href") === "#" + page)
   );
-  window.scrollTo(0, 0);
+  irArriba();
 }
+
+/* Lleva la página al principio al cambiar de sección.
+   No alcanza con un scrollTo suelto: la hoja usa desplazamiento suave, así
+   que la vuelta se animaba y en el celular el navegador la interrumpía y
+   dejaba la ficha empezada por la mitad o por el final. Acá lo hacemos
+   instantáneo y lo repetimos después de que se reacomoda la página, porque
+   al cambiar de sección cambia el alto y el celular puede volver atrás. */
+function irArriba() {
+  const raiz = document.documentElement;
+  const suave = raiz.style.scrollBehavior;
+  raiz.style.scrollBehavior = "auto";
+  window.scrollTo(0, 0);
+  requestAnimationFrame(() => {
+    window.scrollTo(0, 0);
+    requestAnimationFrame(() => {
+      window.scrollTo(0, 0);
+      raiz.style.scrollBehavior = suave;
+    });
+  });
+}
+
+/* Que el navegador no intente recordar dónde estabas al cambiar de
+   dirección: de eso nos ocupamos nosotros. */
+if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+
 window.addEventListener("hashchange", route);
 
 /* ===== Pasar de una sección a la otra, como en la tienda de Apple =====
@@ -4494,11 +4526,11 @@ if ("IntersectionObserver" in window && !matchMedia("(prefers-reduced-motion: re
         e.preventDefault(); seccionActiva = secc; mostrarVista();
       });
 
+      const flecha = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>`;
       detalle.innerHTML = `
-        <a class="foro-volver" href="#foro" id="foro-volver">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
-          Volver a ${escapar(secc)}
-        </a>
+        <button class="foro-volver" type="button" data-volver>
+          ${flecha} Atrás
+        </button>
         <article class="foro-post principal">
           <div class="quien"><b>${escapar(t.autor, "Anónimo")}</b><span>${escapar(secc)} · ${cuando(t.fecha)}</span></div>
           <h3>${escapar(t.titulo, "Sin título")}</h3>
@@ -4527,11 +4559,18 @@ if ("IntersectionObserver" in window && !matchMedia("(prefers-reduced-motion: re
             <button class="btn btn-blue" type="submit">Publicar respuesta</button>
             <span class="foro-aviso" id="fr-aviso"></span>
           </div>
-        </form>`;
+        </form>
+        <button class="foro-volver abajo" type="button" data-volver>
+          ${flecha} Atrás
+        </button>`;
 
-      document.getElementById("foro-volver").addEventListener("click", (e) => {
-        e.preventDefault(); seccionActiva = secc; mostrarVista();
-      });
+      /* los dos botones "Atrás", el de arriba y el del final */
+      detalle.querySelectorAll("[data-volver]").forEach((b) =>
+        b.addEventListener("click", () => {
+          seccionActiva = secc;
+          mostrarVista();
+          document.getElementById("foro").scrollIntoView({ block: "start" });
+        }));
       const abierto = Date.now();
       document.getElementById("foro-form-resp").addEventListener("submit", (e) => {
         e.preventDefault();
