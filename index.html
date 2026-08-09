@@ -62,6 +62,8 @@ a { text-decoration:none; color:inherit; }
    carrito (que sí necesita JavaScript para funcionar). */
 .solo-sin-js { display:none; }
 :root:not(.js) .solo-sin-js { display:flex; }
+/* el aviso del foro es un bloque de texto, no una fila */
+:root:not(.js) .foro-estado.solo-sin-js { display:block; }
 /* Al revés: las fichas fijas solo sirven cuando NO hay JavaScript.
    Con JavaScript manda la ficha interactiva (#producto). */
 :root.js .prod-estatica { display:none !important; }
@@ -849,6 +851,99 @@ nav {
 }
 .foro-estado h3 { font-size:23px; font-weight:600; color:#f5f5f7; }
 .foro-estado p { font-size:15px; color:#a1a1a6; margin:10px auto 20px; max-width:60ch; }
+
+/* ===== Foro en funcionamiento ===== */
+.foro-wrap { max-width:1024px; margin:0 auto; }
+.foro-barra {
+  display:flex; gap:12px; align-items:center; flex-wrap:wrap;
+  margin-bottom:20px;
+}
+.foro-barra .familias { margin:0; flex:1; }
+.foro-nuevo-btn { flex:0 0 auto; }
+
+/* formulario para abrir un tema o responder */
+.foro-form {
+  background:#111114; border:1px solid rgba(255,255,255,.1); border-radius:18px;
+  padding:22px; margin-bottom:24px;
+}
+.foro-form.oculto { display:none; }
+.foro-form h3 { font-size:18px; font-weight:600; color:#f5f5f7; margin-bottom:14px; }
+.foro-campo { margin-bottom:12px; }
+.foro-campo label {
+  display:block; font-size:12.5px; color:#86868b; margin-bottom:6px;
+}
+.foro-form input, .foro-form textarea, .foro-form select {
+  width:100%; font-family:inherit; font-size:15px;
+  background:#1a1a1f; color:#f5f5f7;
+  border:1px solid rgba(255,255,255,.14); border-radius:12px;
+  padding:12px 14px;
+}
+.foro-form textarea { min-height:110px; resize:vertical; line-height:1.5; }
+.foro-form input:focus, .foro-form textarea:focus, .foro-form select:focus {
+  outline:none; border-color:rgba(224,169,120,.6);
+}
+.foro-form .fila { display:flex; gap:12px; flex-wrap:wrap; }
+.foro-form .fila > * { flex:1 1 200px; }
+.foro-acciones { display:flex; gap:10px; align-items:center; margin-top:6px; flex-wrap:wrap; }
+.foro-aviso { font-size:13px; color:var(--gold); }
+.foro-aviso.error { color:#ff8f8f; }
+/* trampa para robots: invisible para las personas */
+.foro-trampa { position:absolute; left:-9999px; opacity:0; height:0; }
+
+/* lista de temas */
+.foro-lista { display:flex; flex-direction:column; gap:12px; }
+.foro-tema {
+  background:#111114; border:1px solid rgba(255,255,255,.09); border-radius:16px;
+  padding:20px 22px; cursor:pointer; transition:border-color .25s, transform .25s;
+}
+.foro-tema:hover { border-color:rgba(224,169,120,.45); transform:translateY(-2px); }
+.foro-tema .cab { display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-bottom:8px; }
+.foro-tema .cat {
+  font-size:11.5px; font-weight:600; letter-spacing:.04em; text-transform:uppercase;
+  color:var(--gold); background:var(--gold-soft); padding:4px 11px; border-radius:980px;
+}
+.foro-tema .cuando { font-size:12.5px; color:#6e6e73; }
+.foro-tema h3 { font-size:18px; font-weight:600; color:#f5f5f7; letter-spacing:-.01em; }
+.foro-tema .extracto {
+  font-size:14.5px; color:#a1a1a6; margin-top:6px;
+  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+}
+.foro-tema .pie {
+  display:flex; gap:14px; align-items:center; margin-top:12px;
+  font-size:13px; color:#86868b;
+}
+.foro-tema .pie b { color:#d2d2d7; font-weight:600; }
+
+/* un tema abierto */
+.foro-detalle { display:none; }
+.foro-detalle.abierto { display:block; }
+.foro-lista.oculto { display:none; }
+.foro-volver {
+  display:inline-flex; align-items:center; gap:6px;
+  font-size:14px; color:var(--link); margin-bottom:18px;
+}
+.foro-volver svg { width:15px; height:15px; }
+.foro-post {
+  background:#111114; border:1px solid rgba(255,255,255,.09);
+  border-radius:16px; padding:20px 22px; margin-bottom:12px;
+}
+.foro-post.principal { border-color:rgba(224,169,120,.3); }
+.foro-post .quien {
+  display:flex; gap:10px; align-items:baseline; flex-wrap:wrap; margin-bottom:8px;
+}
+.foro-post .quien b { font-size:15px; color:#f5f5f7; font-weight:600; }
+.foro-post .quien span { font-size:12.5px; color:#6e6e73; }
+.foro-post p { font-size:15px; color:#c7c7cc; line-height:1.6; white-space:pre-wrap; }
+.foro-post h3 { font-size:21px; font-weight:600; color:#f5f5f7; margin-bottom:10px; }
+.foro-respuestas-tit {
+  font-size:14px; color:#86868b; margin:22px 0 12px;
+}
+.foro-cargando { text-align:center; padding:40px; color:#6e6e73; font-size:15px; }
+.foro-vacio {
+  text-align:center; padding:46px 22px; color:#a1a1a6;
+  border:1px dashed rgba(255,255,255,.14); border-radius:18px;
+}
+.foro-vacio b { display:block; color:#f5f5f7; font-size:18px; margin-bottom:6px; font-weight:600; }
 
 /* ============ CONTACTO ============ */
 .contact {
@@ -2945,32 +3040,67 @@ footer a { color:var(--link); }
     <p class="note">Un espacio para resolver dudas entre usuarios de Apple en Tierra del Fuego.</p>
   </div>
 
-  <div class="foro-grid">
-    <div class="foro-cat">
-      <h3>Compras y precios</h3>
-      <p>Dudas antes de comprar, comparación de modelos y formas de pago.</p>
+  <div class="foro-wrap solo-js" id="foro-wrap">
+
+    <div class="foro-barra">
+      <div class="familias" id="foro-cats"></div>
+      <button class="btn btn-blue foro-nuevo-btn" id="foro-nuevo-btn" type="button">Abrir un tema</button>
     </div>
-    <div class="foro-cat">
-      <h3>Servicio técnico</h3>
-      <p>Fallas, baterías, pantallas y todo lo que le pasa a tu equipo.</p>
+
+    <!-- formulario para abrir un tema -->
+    <form class="foro-form oculto" id="foro-form-tema">
+      <h3>Abrir un tema nuevo</h3>
+      <div class="fila">
+        <div class="foro-campo">
+          <label for="ft-nombre">Tu nombre</label>
+          <input type="text" id="ft-nombre" maxlength="40" required placeholder="Como querés que te vean">
+        </div>
+        <div class="foro-campo">
+          <label for="ft-cat">Categoría</label>
+          <select id="ft-cat"></select>
+        </div>
+      </div>
+      <div class="foro-campo">
+        <label for="ft-titulo">Título</label>
+        <input type="text" id="ft-titulo" maxlength="90" required placeholder="Resumí tu consulta en una línea">
+      </div>
+      <div class="foro-campo">
+        <label for="ft-mensaje">Tu mensaje</label>
+        <textarea id="ft-mensaje" maxlength="1500" required placeholder="Contá tu caso con el detalle que puedas"></textarea>
+      </div>
+      <input type="text" class="foro-trampa" id="ft-trampa" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <div class="foro-acciones">
+        <button class="btn btn-blue" type="submit">Publicar</button>
+        <button class="btn btn-outline" type="button" id="ft-cancelar">Cancelar</button>
+        <span class="foro-aviso" id="ft-aviso"></span>
+      </div>
+    </form>
+
+    <!-- lista de temas -->
+    <div class="foro-lista" id="foro-lista">
+      <div class="foro-cargando">Cargando el foro…</div>
     </div>
-    <div class="foro-cat">
-      <h3>iOS y configuración</h3>
-      <p>Actualizaciones, respaldos, iCloud y trucos del sistema.</p>
-    </div>
-    <div class="foro-cat">
-      <h3>Accesorios</h3>
-      <p>Fundas, cargadores, AirPods y compatibilidad entre equipos.</p>
-    </div>
+
+    <!-- un tema abierto -->
+    <div class="foro-detalle" id="foro-detalle"></div>
   </div>
 
-  <div class="foro-estado">
-    <span class="pill">Próximamente</span>
-    <h3>El foro está en preparación</h3>
-    <p>Para que la gente pueda escribir y que los mensajes queden guardados hace falta
-       conectar el sitio a un servidor. El diseño ya está listo y esperando. Mientras tanto,
-       escribinos y te respondemos al momento.</p>
+  <!-- Se ve si el foro todavía no está conectado a la base de datos -->
+  <div class="foro-estado" id="foro-sin-conectar" style="display:none">
+    <span class="pill">Falta un paso</span>
+    <h3>El foro todavía no está conectado</h3>
+    <p>Para que los mensajes queden guardados hay que enlazar el sitio con una base
+       de datos. Está todo listo de este lado: falta pegar los datos de conexión.
+       Mientras tanto, escribinos y te respondemos al momento.</p>
     <a data-wa href="https://wa.me/5492901566408?text=%C2%A1Hola%20Tu%20Apple%20TDF!%20Quiero%20hacer%20una%20consulta." target="_blank" rel="noopener" class="btn btn-blue">Hacer tu consulta</a>
+  </div>
+
+  <!-- Sin JavaScript no hay foro posible: se ofrece WhatsApp -->
+  <div class="foro-estado solo-sin-js">
+    <h3>Escribinos directamente</h3>
+    <p>Para usar el foro hace falta abrir esta página en un navegador con JavaScript.
+       Si preferís, mandanos tu consulta por WhatsApp y te respondemos al momento.</p>
+    <a href="https://wa.me/5492901566408?text=%C2%A1Hola%20Tu%20Apple%20TDF!%20Quiero%20hacer%20una%20consulta." target="_blank" rel="noopener" class="btn btn-blue">Hacer tu consulta</a>
   </div>
 </section>
 
@@ -3073,6 +3203,28 @@ const CONFIG = {
   whatsapp: "5492901566408", // ← REEMPLAZAR por el número real (código país + número, sin + ni espacios)
   instagram: "tuappletdf",
 };
+
+/* ============ FORO: conexión a la base de datos ============
+   El foro necesita guardar lo que escribe la gente, y para eso usa
+   Firebase (de Google). Es gratis para este uso.
+
+   Mientras esto esté vacío, el foro muestra un cartel avisando que
+   falta conectarlo y el resto del sitio funciona igual.
+
+   Para activarlo, pegá acá los datos que te da Firebase.
+   Los pasos están en el archivo FORO-COMO-ACTIVARLO.txt.
+
+   Estos datos NO son secretos: van a la vista en cualquier sitio web.
+   Lo que protege el foro son las reglas de seguridad, que también
+   están explicadas en ese archivo. */
+ const firebaseConfig = {
+    apiKey: "AIzaSyCJIV8caNWqfsT8WRrL7ZdMEy8rny1o03c",
+    authDomain: "tuappletdf-d2b14.firebaseapp.com",
+    projectId: "tuappletdf-d2b14",
+    storageBucket: "tuappletdf-d2b14.firebasestorage.app",
+    messagingSenderId: "1052455055518",
+    appId: "1:1052455055518:web:0bc3de3d6be4c3184c0b8f"
+  };
 
 const IMG = (slug) => `https://fdn2.gsmarena.com/vv/bigpic/${slug}.jpg`;
 
@@ -4042,6 +4194,292 @@ if ("IntersectionObserver" in window && !matchMedia("(prefers-reduced-motion: re
   addEventListener("hashchange", () => setTimeout(mostrarVisibles, 400));
   addEventListener("load", () => setTimeout(mostrarVisibles, 400));
 }
+
+/* ============ FORO ============
+   Guarda los temas y las respuestas en Firebase. Nadie necesita crearse
+   una cuenta para escribir: solo pone su nombre.
+   Si FIREBASE está vacío, muestra el cartel de "falta conectarlo". */
+(function () {
+  const wrap    = document.getElementById("foro-wrap");
+  const sinConf = document.getElementById("foro-sin-conectar");
+  if (!wrap) return;
+
+  const configurado = FIREBASE.apiKey && FIREBASE.projectId;
+  if (!configurado) {
+    wrap.style.display = "none";
+    if (sinConf) sinConf.style.display = "block";
+    return;
+  }
+
+  const CATEGORIAS = [
+    "Compras y precios",
+    "Servicio técnico",
+    "iOS y configuración",
+    "Accesorios",
+  ];
+
+  const lista   = document.getElementById("foro-lista");
+  const detalle = document.getElementById("foro-detalle");
+  const cats    = document.getElementById("foro-cats");
+  const form    = document.getElementById("foro-form-tema");
+  const btnNuevo = document.getElementById("foro-nuevo-btn");
+  const aviso   = document.getElementById("ft-aviso");
+
+  let db = null, api = null;
+  let categoriaActiva = "todas";
+  let abiertoDesde = 0;
+
+  const escapar = (t) => String(t)
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+  /* "hace 5 minutos", "ayer", etc. */
+  function cuando(fecha) {
+    if (!fecha) return "recién";
+    const d = fecha.toDate ? fecha.toDate() : new Date(fecha);
+    const seg = Math.floor((Date.now() - d.getTime()) / 1000);
+    if (seg < 60) return "recién";
+    if (seg < 3600) return `hace ${Math.floor(seg / 60)} min`;
+    if (seg < 86400) return `hace ${Math.floor(seg / 3600)} h`;
+    if (seg < 172800) return "ayer";
+    return d.toLocaleDateString("es-AR", { day: "numeric", month: "short" });
+  }
+
+  function mostrarAviso(texto, esError) {
+    aviso.textContent = texto;
+    aviso.classList.toggle("error", !!esError);
+    if (texto) setTimeout(() => { aviso.textContent = ""; }, 5000);
+  }
+
+  /* ----- arranque: cargamos Firebase desde su servidor ----- */
+  async function iniciar() {
+    try {
+      const appMod = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js");
+      const fsMod  = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js");
+      const app = appMod.initializeApp(FIREBASE);
+      db = fsMod.getFirestore(app);
+      api = fsMod;
+      armarCategorias();
+      await cargarTemas();
+    } catch (e) {
+      lista.innerHTML = `<div class="foro-vacio">
+        <b>No pudimos abrir el foro</b>
+        Puede ser un problema de conexión. Probá recargar la página.</div>`;
+    }
+  }
+
+  function armarCategorias() {
+    cats.innerHTML =
+      `<button type="button" class="on" data-c="todas">Todos</button>` +
+      CATEGORIAS.map((c) => `<button type="button" data-c="${escapar(c)}">${escapar(c)}</button>`).join("");
+    cats.addEventListener("click", (e) => {
+      const b = e.target.closest("button");
+      if (!b) return;
+      cats.querySelectorAll("button").forEach((x) => x.classList.remove("on"));
+      b.classList.add("on");
+      categoriaActiva = b.dataset.c;
+      cargarTemas();
+    });
+    const sel = document.getElementById("ft-cat");
+    sel.innerHTML = CATEGORIAS.map((c) => `<option>${escapar(c)}</option>`).join("");
+  }
+
+  /* ----- lista de temas ----- */
+  async function cargarTemas() {
+    cerrarDetalle();
+    lista.innerHTML = `<div class="foro-cargando">Cargando el foro…</div>`;
+    try {
+      const q = api.query(
+        api.collection(db, "temas"),
+        api.orderBy("fecha", "desc"),
+        api.limit(60)
+      );
+      const snap = await api.getDocs(q);
+      let temas = [];
+      snap.forEach((d) => temas.push({ id: d.id, ...d.data() }));
+      if (categoriaActiva !== "todas") {
+        temas = temas.filter((t) => t.categoria === categoriaActiva);
+      }
+      pintarLista(temas);
+    } catch (e) {
+      lista.innerHTML = `<div class="foro-vacio">
+        <b>No pudimos cargar los temas</b>
+        Revisá tu conexión y volvé a intentar.</div>`;
+    }
+  }
+
+  function pintarLista(temas) {
+    if (!temas.length) {
+      lista.innerHTML = `<div class="foro-vacio">
+        <b>Todavía no hay temas acá</b>
+        Sé el primero en abrir uno: tocá “Abrir un tema”.</div>`;
+      return;
+    }
+    lista.innerHTML = temas.map((t) => `
+      <article class="foro-tema" data-id="${t.id}">
+        <div class="cab">
+          <span class="cat">${escapar(t.categoria || "General")}</span>
+          <span class="cuando">${cuando(t.fecha)}</span>
+        </div>
+        <h3>${escapar(t.titulo)}</h3>
+        <p class="extracto">${escapar(t.mensaje)}</p>
+        <div class="pie"><span>Por <b>${escapar(t.autor)}</b></span><span>Ver respuestas ›</span></div>
+      </article>`).join("");
+    lista.querySelectorAll(".foro-tema").forEach((el) =>
+      el.addEventListener("click", () => abrirTema(el.dataset.id)));
+  }
+
+  /* ----- un tema con sus respuestas ----- */
+  function cerrarDetalle() {
+    detalle.classList.remove("abierto");
+    detalle.innerHTML = "";
+    lista.classList.remove("oculto");
+  }
+
+  async function abrirTema(id) {
+    lista.classList.add("oculto");
+    detalle.classList.add("abierto");
+    detalle.innerHTML = `<div class="foro-cargando">Abriendo el tema…</div>`;
+    try {
+      const ref = api.doc(db, "temas", id);
+      const snap = await api.getDoc(ref);
+      if (!snap.exists()) { cerrarDetalle(); return; }
+      const t = snap.data();
+
+      const rq = api.query(api.collection(db, "temas", id, "respuestas"), api.orderBy("fecha", "asc"));
+      const rsnap = await api.getDocs(rq);
+      const respuestas = [];
+      rsnap.forEach((d) => respuestas.push(d.data()));
+
+      detalle.innerHTML = `
+        <a class="foro-volver" href="#foro" id="foro-volver">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+          Volver al foro
+        </a>
+        <article class="foro-post principal">
+          <div class="quien"><b>${escapar(t.autor)}</b><span>${escapar(t.categoria || "General")} · ${cuando(t.fecha)}</span></div>
+          <h3>${escapar(t.titulo)}</h3>
+          <p>${escapar(t.mensaje)}</p>
+        </article>
+        <div class="foro-respuestas-tit">${respuestas.length
+          ? `${respuestas.length} ${respuestas.length === 1 ? "respuesta" : "respuestas"}`
+          : "Todavía no hay respuestas"}</div>
+        ${respuestas.map((r) => `
+          <article class="foro-post">
+            <div class="quien"><b>${escapar(r.autor)}</b><span>${cuando(r.fecha)}</span></div>
+            <p>${escapar(r.mensaje)}</p>
+          </article>`).join("")}
+        <form class="foro-form" id="foro-form-resp">
+          <h3>Responder</h3>
+          <div class="foro-campo">
+            <label for="fr-nombre">Tu nombre</label>
+            <input type="text" id="fr-nombre" maxlength="40" required placeholder="Como querés que te vean">
+          </div>
+          <div class="foro-campo">
+            <label for="fr-mensaje">Tu respuesta</label>
+            <textarea id="fr-mensaje" maxlength="1500" required></textarea>
+          </div>
+          <input type="text" class="foro-trampa" id="fr-trampa" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <div class="foro-acciones">
+            <button class="btn btn-blue" type="submit">Publicar respuesta</button>
+            <span class="foro-aviso" id="fr-aviso"></span>
+          </div>
+        </form>`;
+
+      document.getElementById("foro-volver").addEventListener("click", (e) => {
+        e.preventDefault(); cerrarDetalle();
+      });
+      const abierto = Date.now();
+      document.getElementById("foro-form-resp").addEventListener("submit", (e) => {
+        e.preventDefault();
+        publicarRespuesta(id, abierto);
+      });
+      detalle.scrollIntoView({ behavior: "smooth", block: "start" });
+    } catch (e) {
+      detalle.innerHTML = `<div class="foro-vacio"><b>No pudimos abrir el tema</b>Probá de nuevo.</div>`;
+    }
+  }
+
+  /* ----- publicar ----- */
+  function validar(nombre, texto, trampa, desde, avisar) {
+    if (trampa) return false;                       // lo llenó un robot
+    if (Date.now() - desde < 3000) {                // demasiado rápido
+      avisar("Tomate un segundo y volvé a intentar.", true); return false;
+    }
+    if (nombre.trim().length < 2) { avisar("Escribí tu nombre.", true); return false; }
+    if (texto.trim().length < 10) { avisar("Contá un poco más, así te podemos ayudar.", true); return false; }
+    return true;
+  }
+
+  async function publicarTema(e) {
+    e.preventDefault();
+    const nombre = document.getElementById("ft-nombre").value;
+    const titulo = document.getElementById("ft-titulo").value;
+    const mensaje = document.getElementById("ft-mensaje").value;
+    const cat = document.getElementById("ft-cat").value;
+    const trampa = document.getElementById("ft-trampa").value;
+    if (!validar(nombre, mensaje, trampa, abiertoDesde, mostrarAviso)) return;
+    if (titulo.trim().length < 5) { mostrarAviso("El título es muy corto.", true); return; }
+
+    const btn = form.querySelector('button[type="submit"]');
+    btn.disabled = true; btn.textContent = "Publicando…";
+    try {
+      await api.addDoc(api.collection(db, "temas"), {
+        autor: nombre.trim().slice(0, 40),
+        titulo: titulo.trim().slice(0, 90),
+        mensaje: mensaje.trim().slice(0, 1500),
+        categoria: cat,
+        fecha: api.serverTimestamp(),
+      });
+      form.reset();
+      form.classList.add("oculto");
+      mostrarAviso("");
+      await cargarTemas();
+    } catch (err) {
+      mostrarAviso("No se pudo publicar. Probá de nuevo.", true);
+    }
+    btn.disabled = false; btn.textContent = "Publicar";
+  }
+
+  async function publicarRespuesta(id, desde) {
+    const nombre = document.getElementById("fr-nombre").value;
+    const mensaje = document.getElementById("fr-mensaje").value;
+    const trampa = document.getElementById("fr-trampa").value;
+    const av = document.getElementById("fr-aviso");
+    const avisar = (t, err) => {
+      av.textContent = t; av.classList.toggle("error", !!err);
+      if (t) setTimeout(() => { av.textContent = ""; }, 5000);
+    };
+    if (!validar(nombre, mensaje, trampa, desde, avisar)) return;
+
+    const btn = document.querySelector("#foro-form-resp button[type=submit]");
+    btn.disabled = true; btn.textContent = "Publicando…";
+    try {
+      await api.addDoc(api.collection(db, "temas", id, "respuestas"), {
+        autor: nombre.trim().slice(0, 40),
+        mensaje: mensaje.trim().slice(0, 1500),
+        fecha: api.serverTimestamp(),
+      });
+      await abrirTema(id);
+    } catch (err) {
+      avisar("No se pudo publicar. Probá de nuevo.", true);
+      btn.disabled = false; btn.textContent = "Publicar respuesta";
+    }
+  }
+
+  btnNuevo.addEventListener("click", () => {
+    form.classList.toggle("oculto");
+    abiertoDesde = Date.now();
+    if (!form.classList.contains("oculto")) {
+      document.getElementById("ft-nombre").focus();
+    }
+  });
+  document.getElementById("ft-cancelar").addEventListener("click", () => {
+    form.classList.add("oculto"); form.reset(); mostrarAviso("");
+  });
+  form.addEventListener("submit", publicarTema);
+
+  iniciar();
+})();
 
 /* ============ ASISTENTE ============
    Responde con los datos REALES del catálogo de más arriba: precios,
