@@ -3217,14 +3217,14 @@ const CONFIG = {
    Estos datos NO son secretos: van a la vista en cualquier sitio web.
    Lo que protege el foro son las reglas de seguridad, que también
    están explicadas en ese archivo. */
- const firebaseConfig = {
-    apiKey: "AIzaSyCJIV8caNWqfsT8WRrL7ZdMEy8rny1o03c",
-    authDomain: "tuappletdf-d2b14.firebaseapp.com",
-    projectId: "tuappletdf-d2b14",
-    storageBucket: "tuappletdf-d2b14.firebasestorage.app",
-    messagingSenderId: "1052455055518",
-    appId: "1:1052455055518:web:0bc3de3d6be4c3184c0b8f"
-  };
+const FIREBASE = {
+  apiKey: "AIzaSyCJIV8caNWqfsT8WRrL7ZdMEy8rny1o03c",
+  authDomain: "tuappletdf-d2b14.firebaseapp.com",
+  projectId: "tuappletdf-d2b14",
+  storageBucket: "tuappletdf-d2b14.firebasestorage.app",
+  messagingSenderId: "1052455055518",
+  appId: "1:1052455055518:web:0bc3de3d6be4c3184c0b8f",
+};
 
 const IMG = (slug) => `https://fdn2.gsmarena.com/vv/bigpic/${slug}.jpg`;
 
@@ -4204,7 +4204,16 @@ if ("IntersectionObserver" in window && !matchMedia("(prefers-reduced-motion: re
   const sinConf = document.getElementById("foro-sin-conectar");
   if (!wrap) return;
 
-  const configurado = FIREBASE.apiKey && FIREBASE.projectId;
+  /* Aceptamos los dos nombres posibles: "FIREBASE" (el nuestro) y
+     "firebaseConfig" (el que da Firebase cuando copiás su bloque tal cual).
+     Antes, si pegabas el de Firebase, el foro se caía entero con un error
+     y ni siquiera respondía el botón de "Abrir un tema". */
+  const cfg =
+    (typeof FIREBASE !== "undefined" && FIREBASE && FIREBASE.apiKey) ? FIREBASE :
+    (typeof firebaseConfig !== "undefined" && firebaseConfig && firebaseConfig.apiKey) ? firebaseConfig :
+    null;
+
+  const configurado = !!(cfg && cfg.apiKey && cfg.projectId);
   if (!configurado) {
     wrap.style.display = "none";
     if (sinConf) sinConf.style.display = "block";
@@ -4229,7 +4238,9 @@ if ("IntersectionObserver" in window && !matchMedia("(prefers-reduced-motion: re
   let categoriaActiva = "todas";
   let abiertoDesde = 0;
 
-  const escapar = (t) => String(t)
+  /* Convierte a texto seguro. Si el dato no está (por ejemplo un tema
+     cargado a mano desde la consola de Firebase), no muestra "undefined". */
+  const escapar = (t, siFalta) => String(t == null || t === "" ? (siFalta || "") : t)
     .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
   /* "hace 5 minutos", "ayer", etc. */
@@ -4250,20 +4261,30 @@ if ("IntersectionObserver" in window && !matchMedia("(prefers-reduced-motion: re
     if (texto) setTimeout(() => { aviso.textContent = ""; }, 5000);
   }
 
-  /* ----- arranque: cargamos Firebase desde su servidor ----- */
+  /* ----- arranque: cargamos Firebase desde su servidor -----
+     Con límite de tiempo: si la conexión no responde, avisamos en vez de
+     dejar el cartel de "Cargando…" girando para siempre. */
   async function iniciar() {
+    const conLimite = (promesa, ms) => Promise.race([
+      promesa,
+      new Promise((_, rechazar) => setTimeout(() => rechazar(new Error("tardo demasiado")), ms)),
+    ]);
     try {
-      const appMod = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js");
-      const fsMod  = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js");
-      const app = appMod.initializeApp(FIREBASE);
+      const [appMod, fsMod] = await conLimite(Promise.all([
+        import("https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"),
+        import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"),
+      ]), 15000);
+      const app = appMod.initializeApp(cfg);
       db = fsMod.getFirestore(app);
       api = fsMod;
       armarCategorias();
       await cargarTemas();
     } catch (e) {
+      console.error("Foro:", e);
       lista.innerHTML = `<div class="foro-vacio">
         <b>No pudimos abrir el foro</b>
-        Puede ser un problema de conexión. Probá recargar la página.</div>`;
+        Puede ser un problema de conexión. Probá recargar la página, o
+        escribinos por WhatsApp y te respondemos al momento.</div>`;
     }
   }
 
@@ -4320,9 +4341,9 @@ if ("IntersectionObserver" in window && !matchMedia("(prefers-reduced-motion: re
           <span class="cat">${escapar(t.categoria || "General")}</span>
           <span class="cuando">${cuando(t.fecha)}</span>
         </div>
-        <h3>${escapar(t.titulo)}</h3>
-        <p class="extracto">${escapar(t.mensaje)}</p>
-        <div class="pie"><span>Por <b>${escapar(t.autor)}</b></span><span>Ver respuestas ›</span></div>
+        <h3>${escapar(t.titulo, "Sin título")}</h3>
+        <p class="extracto">${escapar(t.mensaje, "")}</p>
+        <div class="pie"><span>Por <b>${escapar(t.autor, "Anónimo")}</b></span><span>Ver respuestas ›</span></div>
       </article>`).join("");
     lista.querySelectorAll(".foro-tema").forEach((el) =>
       el.addEventListener("click", () => abrirTema(el.dataset.id)));
@@ -4356,17 +4377,17 @@ if ("IntersectionObserver" in window && !matchMedia("(prefers-reduced-motion: re
           Volver al foro
         </a>
         <article class="foro-post principal">
-          <div class="quien"><b>${escapar(t.autor)}</b><span>${escapar(t.categoria || "General")} · ${cuando(t.fecha)}</span></div>
-          <h3>${escapar(t.titulo)}</h3>
-          <p>${escapar(t.mensaje)}</p>
+          <div class="quien"><b>${escapar(t.autor, "Anónimo")}</b><span>${escapar(t.categoria || "General")} · ${cuando(t.fecha)}</span></div>
+          <h3>${escapar(t.titulo, "Sin título")}</h3>
+          <p>${escapar(t.mensaje, "")}</p>
         </article>
         <div class="foro-respuestas-tit">${respuestas.length
           ? `${respuestas.length} ${respuestas.length === 1 ? "respuesta" : "respuestas"}`
           : "Todavía no hay respuestas"}</div>
         ${respuestas.map((r) => `
           <article class="foro-post">
-            <div class="quien"><b>${escapar(r.autor)}</b><span>${cuando(r.fecha)}</span></div>
-            <p>${escapar(r.mensaje)}</p>
+            <div class="quien"><b>${escapar(r.autor, "Anónimo")}</b><span>${cuando(r.fecha)}</span></div>
+            <p>${escapar(r.mensaje, "")}</p>
           </article>`).join("")}
         <form class="foro-form" id="foro-form-resp">
           <h3>Responder</h3>
