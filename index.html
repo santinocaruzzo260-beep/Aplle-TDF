@@ -1114,16 +1114,18 @@ nav {
 }
 /* Tipografía Apple: peso semibold y letra ajustada, sin efectos */
 .brand-name {
-  font-size:clamp(44px,6.4vw,78px); font-weight:600; line-height:.94;
+  /* En celular "Apple" ocupa unos 234 de los 339px de la columna: el mismo
+     tamaño de la referencia que pasó el cliente. */
+  font-size:clamp(92px,9vw,140px); font-weight:600; line-height:.94;
   letter-spacing:-.032em; color:#f5f5f7;
 }
 /* cada palabra en su propio renglón */
 .brand-name span { display:block; }
-/* "TDF" cierra el bloque: más chico, dorado y bien espaciado */
+/* "TDF" cierra el bloque: dorado, apenas más chico que las otras dos */
 .brand-tdf {
   color:var(--gold);
-  font-size:.42em; font-weight:600;
-  letter-spacing:.34em; margin-top:.24em; margin-left:.05em;
+  font-size:.82em; font-weight:600;
+  letter-spacing:.08em; margin-top:.04em;
 }
 .hero-sub {
   margin-top:16px; font-size:clamp(17px,1.6vw,21px); font-weight:400;
