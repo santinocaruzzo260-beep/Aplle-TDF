@@ -29,10 +29,13 @@ document.documentElement.classList.add("js");
   --gold-soft: rgba(224, 169, 120, .14);
   --radius: 18px;
 
-  /* El "plato" blanco sobre el que se apoyan los equipos. Es un solo tono,
-     plano y sin degradado, para que TODOS los celulares queden sobre
-     exactamente el mismo blanco: en las tarjetas y en la ficha. */
-  --plato: #f2f2f4;
+  /* El "plato" blanco sobre el que se apoyan los equipos.
+     ESTE VALOR NO SE TOCA: es el mismo blanco que traen pegado de fábrica
+     las fotos de Apple (lo medí en 32 fotos, 126 de 128 esquinas dieron
+     exactamente #f5f5f7). Al ser idéntico, el recuadro de la foto se funde
+     con el fondo y deja de notarse. Tiene que ser un tono plano, sin
+     degradado, o el recuadro vuelve a aparecer en los bordes. */
+  --plato: #f5f5f7;
 }
 * { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior:smooth; }
@@ -157,7 +160,7 @@ nav {
 /* ===== VITRINA: pasa sola con animación CSS =====
    Se hace con CSS y no con JavaScript para que también se mueva en la
    vista previa de WhatsApp, que no ejecuta JavaScript.
-   Son 6 equipos: cada uno se ve 1/6 del ciclo de 21 segundos. */
+   Son 4 equipos: cada uno se ve 3,5 segundos del ciclo de 14. */
 .show-tile {
   /* Grafito, del color de la foto que pasó el cliente: la baldosa deja de
      ser un recuadro blanco recortado y se apoya sobre el fondo negro. */
@@ -183,7 +186,7 @@ nav {
   position:absolute; inset:38px 34px 30px;
   display:flex; flex-direction:column; align-items:center; justify-content:center; gap:20px;
   opacity:0;
-  animation:pasarSolo 21s infinite;
+  animation:pasarSolo 14s infinite;
 }
 /* el primero se ve aunque las animaciones estén desactivadas */
 .show-slide:first-child { opacity:1; }
@@ -191,12 +194,10 @@ nav {
 .show-slide:nth-child(2) { animation-delay:3.5s; }
 .show-slide:nth-child(3) { animation-delay:7s; }
 .show-slide:nth-child(4) { animation-delay:10.5s; }
-.show-slide:nth-child(5) { animation-delay:14s; }
-.show-slide:nth-child(6) { animation-delay:17.5s; }
 @keyframes pasarSolo {
-  0%       { opacity:0; transform:scale(.97); }
-  3%, 14%  { opacity:1; transform:scale(1); }
-  17%, 100%{ opacity:0; transform:scale(.97); }
+  0%          { opacity:0; transform:scale(.97); }
+  4.5%, 21%   { opacity:1; transform:scale(1); }
+  25.5%, 100% { opacity:0; transform:scale(.97); }
 }
 /* Los equipos van quietos: la vitrina cambia de modelo, pero el celular
    no flota ni se inclina. */
@@ -214,17 +215,15 @@ nav {
 .show-dots { display:flex; gap:9px; justify-content:center; margin-top:20px; position:relative; z-index:1; }
 .show-dots i {
   width:9px; height:9px; border-radius:50%; background:rgba(255,255,255,.26);
-  animation:puntoActivo 21s infinite;
+  animation:puntoActivo 14s infinite;
 }
 .show-dots i:nth-child(1) { animation-delay:0s; }
 .show-dots i:nth-child(2) { animation-delay:3.5s; }
 .show-dots i:nth-child(3) { animation-delay:7s; }
 .show-dots i:nth-child(4) { animation-delay:10.5s; }
-.show-dots i:nth-child(5) { animation-delay:14s; }
-.show-dots i:nth-child(6) { animation-delay:17.5s; }
 @keyframes puntoActivo {
-  0%, 16%  { background:#f5f5f7; transform:scale(1.25); }
-  17%,100% { background:rgba(255,255,255,.26); transform:none; }
+  0%, 24%   { background:#f5f5f7; transform:scale(1.25); }
+  25%, 100% { background:rgba(255,255,255,.26); transform:none; }
 }
 
 @media (max-width:900px){
@@ -321,17 +320,14 @@ nav {
 .shop-section .card .cuotas,
 .shop-section .card .price small { color:#a1a1a6; }
 .shop-section .card .tag.usado { color:#a1a1a6; }
-/* baldosa "estudio": un blanco plano, el mismo para todos los equipos */
+/* baldosa "estudio": el mismo blanco que traen las fotos, plano y sin
+   sombras internas, para que no se vea el borde del recuadro */
 .shop-section .card .img-wrap {
   position:relative; border-radius:16px; padding:10px; overflow:hidden;
   background:var(--plato);
-  box-shadow:inset 0 0 0 1px rgba(0,0,0,.04);
 }
-.shop-section .card .img-wrap::after {   /* sombra del equipo apoyado */
-  content:""; position:absolute; left:22%; right:22%; bottom:12px; height:14px;
-  background:radial-gradient(50% 50% at 50% 50%, rgba(0,0,0,.28), transparent 70%);
-  filter:blur(3px);
-}
+/* Antes había acá una sombra pintada bajo el equipo. Se sacó: el recuadro
+   blanco de la foto la tapaba por delante, y justo ahí se veía el corte. */
 .shop-section .card .img-wrap .foto {
   position:relative; z-index:1;
 }
@@ -711,11 +707,7 @@ nav {
   box-shadow:0 30px 70px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.12);
   display:flex; align-items:center; justify-content:center; padding:26px;
 }
-.prod-shot::after {
-  content:""; position:absolute; left:26%; right:26%; bottom:9%; height:20px;
-  background:radial-gradient(50% 50% at 50% 50%, rgba(0,0,0,.3), transparent 70%);
-  filter:blur(6px);
-}
+/* Misma razón que en las tarjetas: sin sombra pintada, el blanco queda parejo. */
 .prod-shot .foto {
   position:relative; z-index:1; max-width:100%; max-height:100%;
   object-fit:contain;
@@ -1467,24 +1459,8 @@ footer a { color:var(--link); }
           <span>Desde $ 2.535.033,15</span>
           <span class="show-cta">Ver ficha &rsaquo;</span>
         </div>
-      </a>
-      <a class="show-slide" href="#p9">
-        <i class="foto foto-apple" role="img" aria-label="iPhone 16 Pro Max" style="background-image:url('iphone-16-pro-finish-select-202409-6-9inch-naturaltitanium.png')"></i>
-        <div class="show-caption">
-          <strong>iPhone 16 Pro Max</strong>
-          <span>Desde $ 2.888.614,95</span>
-          <span class="show-cta">Ver ficha &rsaquo;</span>
-        </div>
-      </a>
-      <a class="show-slide" href="#p11">
-        <i class="foto foto-apple" role="img" aria-label="iPhone 16 Pro" style="background-image:url('iphone-16-pro-finish-select-202409-6-3inch-whitetitanium.png')"></i>
-        <div class="show-caption">
-          <strong>iPhone 16 Pro</strong>
-          <span>Desde $ 2.399.555,28</span>
-          <span class="show-cta">Ver ficha &rsaquo;</span>
-        </div>
       </a><!--/VITRINA--></div>
-        <div class="show-dots" id="show-dots"><!--PUNTOS--><i></i><i></i><i></i><i></i><i></i><i></i><!--/PUNTOS--></div>
+        <div class="show-dots" id="show-dots"><!--PUNTOS--><i></i><i></i><i></i><i></i><!--/PUNTOS--></div>
       </div>
     </div>
   </div>
