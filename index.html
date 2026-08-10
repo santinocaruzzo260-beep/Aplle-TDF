@@ -28,6 +28,11 @@ document.documentElement.classList.add("js");
   --gold: #e0a978;             /* dorado de marca: etiquetas, detalles */
   --gold-soft: rgba(224, 169, 120, .14);
   --radius: 18px;
+
+  /* El "plato" blanco sobre el que se apoyan los equipos. Es un solo tono,
+     plano y sin degradado, para que TODOS los celulares queden sobre
+     exactamente el mismo blanco: en las tarjetas y en la ficha. */
+  --plato: #f2f2f4;
 }
 * { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior:smooth; }
@@ -316,11 +321,11 @@ nav {
 .shop-section .card .cuotas,
 .shop-section .card .price small { color:#a1a1a6; }
 .shop-section .card .tag.usado { color:#a1a1a6; }
-/* baldosa "estudio": degradado claro + el blanco de la foto se funde con multiply */
+/* baldosa "estudio": un blanco plano, el mismo para todos los equipos */
 .shop-section .card .img-wrap {
   position:relative; border-radius:16px; padding:10px; overflow:hidden;
-  background:radial-gradient(120% 90% at 50% 12%, #ffffff 0%, #f1f1f4 55%, #e2e2e8 100%);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.9), inset 0 -18px 30px rgba(0,0,0,.05);
+  background:var(--plato);
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.04);
 }
 .shop-section .card .img-wrap::after {   /* sombra del equipo apoyado */
   content:""; position:absolute; left:22%; right:22%; bottom:12px; height:14px;
@@ -702,7 +707,7 @@ nav {
 }
 .prod-shot {
   position:relative; width:100%; border-radius:28px; overflow:hidden; aspect-ratio:1/1;
-  background:radial-gradient(105% 85% at 50% 10%, #ffffff 0%, #f1f1f4 55%, #dedee4 100%);
+  background:var(--plato);
   box-shadow:0 30px 70px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.12);
   display:flex; align-items:center; justify-content:center; padding:26px;
 }
